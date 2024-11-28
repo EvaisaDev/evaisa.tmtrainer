@@ -27,6 +27,7 @@ function OnPlayerSpawned(player)
 end
 
 function OnMagicNumbersAndWorldSeedInitialized()
+	ModSettingRemove("evaisa.tmtrainer.global_seed")
 	-- Load necessary scripts to access actions and perks
 	dofile("data/scripts/gun/gun_actions.lua")
 	dofile("data/scripts/perks/perk_list.lua")
