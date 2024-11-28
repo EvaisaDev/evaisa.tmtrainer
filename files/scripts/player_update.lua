@@ -135,7 +135,7 @@ if now % 30 == 0 then
 
 		local parent = EntityGetParent(v)
 		local root = EntityGetRootEntity(v)
-		if EntityHasTag(root, "ew_client") or EntityHasTag(root, "client")  then
+		if not GameHasFlagRun("TMTRAINER") or EntityHasTag(root, "ew_client") or EntityHasTag(root, "client")  then
 			goto continue
 		end
 		
@@ -161,7 +161,13 @@ if now % 30 == 0 then
 
 			SetRandomSeed(x + offset_x, y)
 
-			if GameHasFlagRun("TMTRAINER") and not EntityHasTag(v, "NOT_TMTRAINER") then
+			local rand = Random(1, 100) 
+			local check = true
+			if(ModSettingGet("evaisa.tmtrainer.replace_items") and rand > 50)then
+				check = false
+			end
+
+			if GameHasFlagRun("TMTRAINER") and not EntityHasTag(v, "NOT_TMTRAINER") and check then
 
 				print("Swapping card entity: " .. tostring(v))
 
@@ -175,7 +181,7 @@ if now % 30 == 0 then
 
 			end
 		end
-		
+
 		::continue::
 		if not EntityHasTag(v, "NOT_TMTRAINER") then EntityAddTag(v, "NOT_TMTRAINER") end
 	end

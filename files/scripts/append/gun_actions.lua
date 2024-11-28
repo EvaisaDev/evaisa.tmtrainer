@@ -328,13 +328,13 @@ local function create_tmtrainer_action(action_type, index)
 	-- Create the new action
 	local new_action = {
 		id = "TMTRAINER_" .. tostring(index),
-		spawn_requires_flag = "DO_NOT_SPAWN_LMAO_LOL",
+		spawn_requires_flag = "tmt_do_not_spawn_lmao",
 		name = name,
 		description = description,
 		sprite = sprite,
 		type = action_type,
-		spawn_level = spawn_level,
-		spawn_probability = spawn_probability,
+		spawn_level = "0",
+		spawn_probability = "0,0,0,0,0,0,0,0",
 		price = price,
 		mana = mana,
 		max_uses = max_uses,

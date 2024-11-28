@@ -26,7 +26,6 @@ function OnPlayerSpawned(player)
 end
 
 function OnMagicNumbersAndWorldSeedInitialized()
-
 	ModSettingRemove("evaisa.tmtrainer.global_seed")
 	-- Load necessary scripts to access actions and perks
 	dofile("data/scripts/gun/gun_actions.lua")
@@ -91,4 +90,31 @@ function OnWorldPreUpdate()
 			GameAddFlagRun("TMTRAINER")
 		end	
 	end
+
+	
+	local players = EntityGetWithTag("player_unit")
+	if(GameGetFrameNum() % 20 == 0 and players ~= nil)then
+		for _, player in ipairs(players) do
+			local has_tmtrainer = false
+			local lua_components = EntityGetComponent(player, "LuaComponent")
+			if(lua_components ~= nil)then
+				for _, lua_component in ipairs(lua_components) do
+					local script = ComponentGetValue2(lua_component, "script_source_file")
+					if(script == "mods/evaisa.tmtrainer/files/scripts/player_update.lua")then
+						has_tmtrainer = true
+					end
+				end
+			end
+
+			if(not has_tmtrainer)then
+				EntityAddComponent2(player, "LuaComponent", {
+					execute_every_n_frame = 1,
+					execute_on_added = true,
+					script_source_file = "mods/evaisa.tmtrainer/files/scripts/player_update.lua",
+				});
+			end
+		end
+	end
+	
+
 end
