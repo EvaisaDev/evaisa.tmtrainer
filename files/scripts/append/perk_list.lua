@@ -205,7 +205,6 @@ for i = 1, #perk_pool do
 
 	-- Create the new perk
 	local new_perk = {
-		not_in_default_perk_pool = true,
 		id = id,
 		ui_name = ui_name,
 		ui_description = ui_description,

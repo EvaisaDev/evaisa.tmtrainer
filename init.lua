@@ -6,15 +6,14 @@ function findCenteredImagePosition(gui, image_file, scale)
 	return x, y
 end
 
+local spawned = false
 
 function OnPlayerSpawned(player)
 	dofile("data/scripts/lib/utilities.lua")
 	dofile("data/scripts/perks/perk.lua")
 	dofile("data/scripts/perks/perk_list.lua")
 
-	if(ModSettingGet("evaisa.tmtrainer.always_active"))then
-		GameAddFlagRun("TMTRAINER")
-	end
+	spawned = true
 	
 	if(ModSettingGet("evaisa.tmtrainer.replace_items") and not GameHasFlagRun("TMTRAINER_INIT"))then
 		GameAddFlagRun("TMTRAINER_INIT")
@@ -27,6 +26,7 @@ function OnPlayerSpawned(player)
 end
 
 function OnMagicNumbersAndWorldSeedInitialized()
+
 	ModSettingRemove("evaisa.tmtrainer.global_seed")
 	-- Load necessary scripts to access actions and perks
 	dofile("data/scripts/gun/gun_actions.lua")
@@ -83,4 +83,12 @@ function OnMagicNumbersAndWorldSeedInitialized()
 	local gun_actions_content = ModTextFileGetContent("data/scripts/gun/gun_actions.lua")
 	gun_actions_content = 'dofile_once("data/scripts/gun/gun_enums.lua")\n\n' .. gun_actions_content
 	ModTextFileSetContent("data/scripts/gun/gun_actions.lua", gun_actions_content)
+end
+
+function OnWorldPreUpdate()
+	if(spawned)then
+		if(ModSettingGet("evaisa.tmtrainer.always_active") and not GameHasFlagRun("TMTRAINER"))then
+			GameAddFlagRun("TMTRAINER")
+		end	
+	end
 end
