@@ -97,7 +97,10 @@ end
 
 -- Main script execution
 local TMTRAINER_INDEX = 0
-
+local world_seed = tonumber(StatsGetValue("world_seed")) or 1
+local global_seed = tonumber(GlobalsGetValue("TMTRAINER_GLOBAL_SEED", "0") ~= "0" and GlobalsGetValue("TMTRAINER_GLOBAL_SEED", "0") or tostring(world_seed))
+GlobalsSetValue("TMTRAINER_GLOBAL_SEED", tostring(global_seed))
+SetWorldSeed(global_seed)
 local filter = dofile_once("mods/evaisa.tmtrainer/files/scripts/slur_filter.lua")
 SetRandomSeed(TMTRAINER_INDEX, 0)
 for i = 1, #perk_pool do
@@ -258,3 +261,5 @@ if(not ModSettingGet("evaisa.tmtrainer.always_active"))then
 		end,
 	})
 end
+
+SetWorldSeed(world_seed)

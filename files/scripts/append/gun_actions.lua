@@ -93,6 +93,10 @@ local function generate_image(index, original_sprite, was_first)
 end
 
 -- Main script execution
+local world_seed = tonumber(StatsGetValue("world_seed")) or 1
+local global_seed = tonumber(GlobalsGetValue("TMTRAINER_GLOBAL_SEED", "0") ~= "0" and GlobalsGetValue("TMTRAINER_GLOBAL_SEED", "0") or tostring(world_seed))
+GlobalsSetValue("TMTRAINER_GLOBAL_SEED", tostring(global_seed))
+SetWorldSeed(global_seed)
 local TMTRAINER_INDEX = 0
 local filter = dofile_once("mods/evaisa.tmtrainer/files/scripts/slur_filter.lua")
 -- Function to create a new TMTRAINER action
@@ -358,3 +362,5 @@ for action_type, action_list in pairs(action_info_map) do
 
 	end
 end
+
+SetWorldSeed(world_seed)
