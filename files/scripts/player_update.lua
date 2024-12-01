@@ -169,7 +169,7 @@ if now % 30 == 0 then
 
 			if GameHasFlagRun("TMTRAINER") and not EntityHasTag(v, "NOT_TMTRAINER") and check then
 
-				print("Swapping card entity: " .. tostring(v))
+				--print("Swapping card entity: " .. tostring(v))
 
 				local action_comp = EntityGetFirstComponentIncludingDisabled(v, "ItemActionComponent")
 				if action_comp ~= nil then
